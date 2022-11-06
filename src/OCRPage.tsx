@@ -2,27 +2,36 @@ import React, { useEffect, useRef } from 'react';
 import logo from './logo.svg';
 import { createScheduler, createWorker } from 'tesseract.js';
 import { parseOCR }from './OCRParser';
+import {Results} from './Results';
+import { Stat } from './models/Stat';
 
 export function OCRPage() {
 	const divRef = useRef<HTMLDivElement>(null);
 
 	const [imageFile, setImageData] = React.useState(new File([""], "filename"));
+	const [statsArray, setstatsArray] = React.useState([new Stat("", "")]);
 
 	const worker = createWorker({
 		// logger: m => console.log(m)
 	});
 
-	const ocrWorker = (async () => {
-		await worker.load();
-		await worker.loadLanguage('eng');
-		await worker.initialize('eng');
-		await worker.setParameters({
-			tessedit_char_whitelist: '0123456789+:ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
-		});
-		const { data: { text } } = await worker.recognize(imageFile);
-		parseOCR(text);
-		await worker.terminate();
-	})()
+	useEffect(() => {
+		const ocrWorker = (async () => {
+			await worker.load();
+			await worker.loadLanguage('eng');
+			await worker.initialize('eng');
+			await worker.setParameters({
+				tessedit_char_whitelist: '0123456789+:%.ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
+			});
+			const { data: { text } } = await worker.recognize(imageFile);
+			var {raw, ocrResults, errors} = parseOCR(text);
+
+			console.log(raw);
+			console.log(ocrResults);
+			setstatsArray(ocrResults);
+			await worker.terminate();
+		})()
+	}, [imageFile]);
 
 	useEffect(() => {
 		const handleDrag = (e: Event) => {
@@ -78,9 +87,9 @@ export function OCRPage() {
 		<div ref={divRef} className="OCRPage">
 			<div>
 				<img src={logo} className="App-logo" alt="logo" />
-				<p>DROP SCREENSHOT ON IMAGE</p>
+				<p>DROP SCREENSHOT ON SPINNY THING</p>
 			</div>
+			<Results data={statsArray}/>
 		</div>
-
 	)
 }
