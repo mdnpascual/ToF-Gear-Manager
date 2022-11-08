@@ -26,6 +26,10 @@ export const parseOCR = (unclean: string) => {
 					element.name!,
 					regexResult[0].split("+")[1],
 					regexResult))
+
+				// DELETE STAT FOUND
+				var indexToDelete = choppedOff.search(regexResult[0].replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+				choppedOff = choppedOff.substring(0, indexToDelete) + choppedOff.substring(indexToDelete + regexResult[0].length);
 			count++;
 		}
 	}

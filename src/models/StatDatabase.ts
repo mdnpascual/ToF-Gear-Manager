@@ -369,12 +369,12 @@ export const allStats = [
 	frostAtkStat,
 	flameAtkStat,
 	voltAtkStat,
-	atkStat,
-	resStat,
 	physResStat,
 	frostResStat,
 	flameResStat,
 	voltResStat,
 	hpStat,
-	critStat
+	critStat,
+	atkStat,
+	resStat,
 ]
