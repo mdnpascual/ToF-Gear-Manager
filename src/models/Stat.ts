@@ -11,4 +11,6 @@ export class Stat{
 	name: string;
 	result: string;
 	unclean? : RegExpMatchArray;
+	upgrades?: number;
+	efficiency?: number;
 }

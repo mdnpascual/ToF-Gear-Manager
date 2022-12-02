@@ -1,5 +1,5 @@
 import React from 'react';
-import { Stat } from './models/Stat';
+import { Stat } from '../models/Stat';
 
 export function Results( { data } : {data : Stat[]}) {
 	return (

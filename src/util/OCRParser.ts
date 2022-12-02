@@ -1,5 +1,5 @@
-import { allStats }from './models/StatDatabase';
-import { Stat } from './models/Stat';
+import { allStats }from '../models/StatDatabase';
+import { Stat } from '../models/Stat';
 
 export const parseOCR = (unclean: string) => {
 	var loweredCase = unclean.toLowerCase();

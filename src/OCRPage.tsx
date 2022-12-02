@@ -1,8 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import logo from './logo.svg';
 import { createScheduler, createWorker } from 'tesseract.js';
-import { parseOCR }from './OCRParser';
-import {Results} from './Results';
+import { parseOCR }from './util/OCRParser';
+import { gradeArmor }from './util/ArmorGrader';
+import { getRarity }from './util/RarityParser';
+import {Results} from './components/Results';
 import { Stat } from './models/Stat';
 
 export function OCRPage() {
@@ -26,8 +28,15 @@ export function OCRPage() {
 			const { data: { text } } = await worker.recognize(imageFile);
 			var {raw, ocrResults, errors} = parseOCR(text);
 
+			var rarity = await getRarity(imageFile);
+			var {data, overallEfficiency} = gradeArmor(ocrResults, rarity);
+
+
 			console.log(raw);
 			console.log(ocrResults);
+			console.log(rarity);
+			console.log(data);
+			console.log(overallEfficiency);
 			setstatsArray(ocrResults);
 			await worker.terminate();
 		})()
