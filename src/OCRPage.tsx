@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import logo from './logo.svg';
-import { createScheduler, createWorker } from 'tesseract.js';
+import { createWorker } from 'tesseract.js';
 import { parseOCR }from './util/OCRParser';
 import { gradeArmor }from './util/ArmorGrader';
 import { getRarity }from './util/RarityParser';

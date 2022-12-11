@@ -1,7 +1,6 @@
 import cv from "@techstark/opencv-js"
-import { MutableRefObject } from "react";
 import star from "../../src/star.png";
-const { Canvas, createCanvas, Image, ImageData, loadImage } = require('canvas');
+const { loadImage } = require('canvas');
 
 export const getStarCount = async (
 	file : File,
@@ -91,7 +90,7 @@ export const matchTemplateGetStarCount = async (
 		}
 
 		console.log("Star Count: " + count);
-		if(count != 0){
+		if(count !== 0){
 			cv.imshow(canvasRef.current!, inputImg);
 			cv.imshow(starCanvasRef.current!, starImg);
 		}
