@@ -1,7 +1,7 @@
 import { allStats }from '../models/StatDatabase';
 import { Stat } from '../models/Stat';
 
-export const gradeArmor = (data : Stat[], rarity: number) => {
+export const gradeArmor = (data : Stat[], rarity: number, starCount: number) => {
 	var totalEfficiency = 0;
 	var count = 0;
 	data.forEach(element => {
@@ -27,7 +27,7 @@ export const gradeArmor = (data : Stat[], rarity: number) => {
 						element.upgrades = Math.ceil(upgradedAmount / averageUpgrade);
 						element.efficiency = element.upgrades === 0 ?
 							1.0 :
-							Math.ceil((upgradedAmount / ((entry.maxVal5 ?? 0) * element.upgrades)) * 100) / 100;
+							Math.ceil((upgradedAmount / ((entry.maxVal5 ?? 0) * element.upgrades)) * 10000) / 10000;
 					}
 					break;
 
@@ -43,7 +43,7 @@ export const gradeArmor = (data : Stat[], rarity: number) => {
 						element.upgrades = Math.ceil(upgradedAmount / averageUpgrade);
 						element.efficiency = element.upgrades === 0 ?
 							1.0 :
-							Math.ceil((upgradedAmount / ((entry.maxVal4 ?? 0) * element.upgrades)) * 100) / 100;
+							Math.ceil((upgradedAmount / ((entry.maxVal4 ?? 0) * element.upgrades)) * 10000) / 10000;
 					}
 
 					break;

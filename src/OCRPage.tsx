@@ -4,14 +4,18 @@ import { createScheduler, createWorker } from 'tesseract.js';
 import { parseOCR }from './util/OCRParser';
 import { gradeArmor }from './util/ArmorGrader';
 import { getRarity }from './util/RarityParser';
+import { getStarCount }from './util/StarParser';
 import {Results} from './components/Results';
 import { Stat } from './models/Stat';
 
 export function OCRPage() {
 	const divRef = useRef<HTMLDivElement>(null);
+	const canvasRef = useRef<HTMLCanvasElement>(null)
+	const starCanvasRef = useRef<HTMLCanvasElement>(null)
 
 	const [imageFile, setImageData] = React.useState(new File([""], "filename"));
 	const [statsArray, setstatsArray] = React.useState([new Stat("", "")]);
+	const [starDetected, setstarDetected] = React.useState(0);
 
 	const worker = createWorker({
 		// logger: m => console.log(m)
@@ -29,14 +33,15 @@ export function OCRPage() {
 			var {raw, ocrResults, errors} = parseOCR(text);
 
 			var rarity = await getRarity(imageFile);
-			var {data, overallEfficiency} = gradeArmor(ocrResults, rarity);
+			var starCount = await getStarCount(imageFile, canvasRef, starCanvasRef);
+			var {data, overallEfficiency} = gradeArmor(ocrResults, rarity, starCount);
 
 
 			console.log(raw);
-			console.log(ocrResults);
 			console.log(rarity);
 			console.log(data);
 			console.log(overallEfficiency);
+			setstarDetected(starCount);
 			setstatsArray(ocrResults);
 			await worker.terminate();
 		})()
@@ -98,7 +103,9 @@ export function OCRPage() {
 				<img src={logo} className="App-logo" alt="logo" />
 				<p>DROP SCREENSHOT ON SPINNY THING</p>
 			</div>
-			<Results data={statsArray}/>
+			<Results data={statsArray} starDetected={starDetected}/>
+			<canvas ref={canvasRef}/>
+			<canvas ref={starCanvasRef}/>
 		</div>
 	)
 }
