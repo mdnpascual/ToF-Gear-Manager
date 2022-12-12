@@ -77,7 +77,7 @@ export const matchTemplateGetStarCount = async (
 						"y": y
 					}
 
-					// console.log("Score: " + newDst[y][x]);
+					console.log("Score: " + newDst[y][x]);
 					let point = new cv.Point(x + starImg.cols, y + starImg.rows);
 					cv.rectangle(inputImg, maxPoint, point, color, 1, cv.LINE_8, 0);
 
@@ -89,8 +89,8 @@ export const matchTemplateGetStarCount = async (
 			end = end + result.cols;
 		}
 
-		console.log("Star Count: " + count);
 		if(count !== 0){
+			console.log("Star Count: " + count);
 			cv.imshow(canvasRef.current!, inputImg);
 			cv.imshow(starCanvasRef.current!, starImg);
 		}

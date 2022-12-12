@@ -51,30 +51,24 @@ export function OCRPage() {
 		const handleDrag = (e: Event) => {
 			e.preventDefault()
 			e.stopPropagation()
-			console.log("handleDrag")
 		}
 		const handleDragIn =  (e: Event) => {
 			e.preventDefault()
 			e.stopPropagation()
-			console.log("handleDragIn")
 		}
 		const handleDragOut =  (e: Event) => {
 			e.preventDefault()
 			e.stopPropagation()
-			console.log("handleDragOut")
 		}
 		const handleDrop =  (e: DragEvent) => {
 			e.preventDefault()
 			e.stopPropagation()
-			console.log("handleDrop")
 			var clipboardData = e.dataTransfer;
-			console.log(clipboardData!.files[0]);
 			setImageData(clipboardData!.files[0]);
 		}
 		const handlePaste = (e: ClipboardEvent) => {
 			e.preventDefault()
 			e.stopPropagation()
-			console.log("handlePaste")
 			console.log(e)
 			var clipboardData = e.clipboardData;
 			console.log(clipboardData!.files[0]);
