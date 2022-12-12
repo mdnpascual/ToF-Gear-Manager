@@ -22,9 +22,11 @@ export const parseOCR = (unclean: string) => {
 		}
 		var regexResult = choppedOff.match(element.regex!);
 		if(regexResult != null){
+			var result = regexResult[0].split("+")[1];
+			result = element.noDot ? result.replace(".", "") : result;
 				results.push(new Stat(
 					element.name!,
-					regexResult[0].split("+")[1],
+					result,
 					regexResult))
 
 				// DELETE STAT FOUND

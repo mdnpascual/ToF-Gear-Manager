@@ -4,6 +4,7 @@ export class StatDatabase{
 	}
 	name?: string;
 	regex? : RegExp;
+	noDot?: boolean;
 	initVal5?: number;
 	minVal5?: number;
 	maxVal5?: number;
@@ -196,7 +197,8 @@ export const critStatPct = new StatDatabase(critPctJson);
 
 const atkJson = {
 	name: "Attack",
-	regex: /attack\+[0-9]+/g,
+	regex: /attack\+[0-9.]+/g,
+	noDot: true,
 	initVal5: 52,
 	minVal5: 93,
 	maxVal5: 234,
@@ -209,7 +211,8 @@ export const atkStat = new StatDatabase(atkJson);
 
 const physAtkJson = {
 	name: "Physical Attack",
-	regex: /physical[\s]*attack\+[0-9]+/g,
+	regex: /physical[\s]*attack\+[0-9.]+/g,
+	noDot: true,
 	initVal5: 69,
 	minVal5: 125,
 	maxVal5: 312,
@@ -222,7 +225,8 @@ export const physAtkStat = new StatDatabase(physAtkJson);
 
 const frostAtkJson = {
 	name: "Frost Attack",
-	regex: /frost[\s]*attack\+[0-9]+/g,
+	regex: /frost[\s]*attack\+[0-9.]+/g,
+	noDot: true,
 	initVal5: 69,
 	minVal5: 125,
 	maxVal5: 312,
@@ -235,7 +239,8 @@ export const frostAtkStat = new StatDatabase(frostAtkJson);
 
 const flameAtkJson = {
 	name: "Flame Attack",
-	regex: /flame[\s]*attack\+[0-9]+/g,
+	regex: /flame[\s]*attack\+[0-9.]+/g,
+	noDot: true,
 	initVal5: 69,
 	minVal5: 125,
 	maxVal5: 312,
@@ -248,7 +253,8 @@ export const flameAtkStat = new StatDatabase(flameAtkJson);
 
 const voltAtkJson = {
 	name: "Volt Attack",
-	regex: /volt[\s]*attack\+[0-9]+/g,
+	regex: /volt[\s]*attack\+[0-9.]+/g,
+	noDot: true,
 	initVal5: 69,
 	minVal5: 125,
 	maxVal5: 312,
@@ -261,7 +267,8 @@ export const voltAtkStat = new StatDatabase(voltAtkJson);
 
 const resJson = {
 	name: "Resistance",
-	regex: /resistance\+[0-9]+/g,
+	regex: /resistance\+[0-9.]+/g,
+	noDot: true,
 	initVal5: 64,
 	minVal5: 117,
 	maxVal5: 292,
@@ -274,7 +281,8 @@ export const resStat = new StatDatabase(resJson);
 
 const physResJson = {
 	name: "Physical Resistance",
-	regex: /physical[\s]*resistance\+[0-9]+/g,
+	regex: /physical[\s]*resistance\+[0-9.]+/g,
+	noDot: true,
 	initVal5: 215,
 	minVal5: 390,
 	maxVal5: 974,
@@ -287,7 +295,8 @@ export const physResStat = new StatDatabase(physResJson);
 
 const frostResJson = {
 	name: "Frost Resistance",
-	regex: /frost[\s]*resistance\+[0-9]+/g,
+	regex: /frost[\s]*resistance\+[0-9.]+/g,
+	noDot: true,
 	initVal5: 215,
 	minVal5: 390,
 	maxVal5: 974,
@@ -300,7 +309,8 @@ export const frostResStat = new StatDatabase(frostResJson);
 
 const flameResJson = {
 	name: "Flame Resistance",
-	regex: /flame[\s]*resistance\+[0-9]+/g,
+	regex: /flame[\s]*resistance\+[0-9.]+/g,
+	noDot: true,
 	initVal5: 215,
 	minVal5: 390,
 	maxVal5: 974,
@@ -313,7 +323,8 @@ export const flameResStat = new StatDatabase(flameResJson);
 
 const voltResJson = {
 	name: "Volt Resistance",
-	regex: /volt[\s]*resistance\+[0-9]+/g,
+	regex: /volt[\s]*resistance\+[0-9.]+/g,
+	noDot: true,
 	initVal5: 215,
 	minVal5: 390,
 	maxVal5: 974,
@@ -326,7 +337,8 @@ export const voltResStat = new StatDatabase(voltResJson);
 
 const hpJson = {
 	name: "HP",
-	regex: /hp\+[0-9]+/g,
+	regex: /hp\+[0-9.]+/g,
+	noDot: true,
 	initVal5: 4125,
 	minVal5: 7480,
 	maxVal5: 18700,
@@ -339,7 +351,8 @@ export const hpStat = new StatDatabase(hpJson);
 
 const critJson = {
 	name: "Crit",
-	regex: /crit\+[0-9]+/g,
+	regex: /crit\+[0-9.]+/g,
+	noDot: true,
 	initVal5: 258,
 	minVal5: 468,
 	maxVal5: 1169,
