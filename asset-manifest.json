@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/ToF-Gear-Manager/static/css/main.073c9b0a.css",
-    "main.js": "/ToF-Gear-Manager/static/js/main.5b1e7004.js",
+    "main.css": "/ToF-Gear-Manager/static/css/main.1c5072c3.css",
+    "main.js": "/ToF-Gear-Manager/static/js/main.0e05439a.js",
     "static/js/787.93c69536.chunk.js": "/ToF-Gear-Manager/static/js/787.93c69536.chunk.js",
     "static/media/sample.png": "/ToF-Gear-Manager/static/media/sample.ec69437a667a06557445.png",
     "static/media/logo.svg": "/ToF-Gear-Manager/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "index.html": "/ToF-Gear-Manager/index.html",
-    "main.073c9b0a.css.map": "/ToF-Gear-Manager/static/css/main.073c9b0a.css.map",
-    "main.5b1e7004.js.map": "/ToF-Gear-Manager/static/js/main.5b1e7004.js.map",
+    "main.1c5072c3.css.map": "/ToF-Gear-Manager/static/css/main.1c5072c3.css.map",
+    "main.0e05439a.js.map": "/ToF-Gear-Manager/static/js/main.0e05439a.js.map",
     "787.93c69536.chunk.js.map": "/ToF-Gear-Manager/static/js/787.93c69536.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.073c9b0a.css",
-    "static/js/main.5b1e7004.js"
+    "static/css/main.1c5072c3.css",
+    "static/js/main.0e05439a.js"
   ]
 }
