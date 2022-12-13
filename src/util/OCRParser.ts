@@ -1,4 +1,5 @@
 import { allStats }from '../models/StatDatabase';
+import { allArmorTypes }from '../models/ArmorTypeDatabase';
 import { Stat } from '../models/Stat';
 
 export const parseOCR = (unclean: string) => {
@@ -33,6 +34,20 @@ export const parseOCR = (unclean: string) => {
 				var indexToDelete = choppedOff.search(regexResult[0].replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
 				choppedOff = choppedOff.substring(0, indexToDelete) + choppedOff.substring(indexToDelete + regexResult[0].length);
 			count++;
+		}
+	}
+
+	for(const types of allArmorTypes){
+		var regex5Result = loweredCase.match(types.regex5!);
+		if(regex5Result != null){
+			console.log("TODO: 5 STAR DETECTED!");
+			console.log(types.type);
+		} else {
+			var regex4Result = loweredCase.match(types.regex4!);
+			if(regex4Result != null){
+				console.log("TODO: 4 STAR DETECTED!");
+				console.log(types.type);
+			}
 		}
 	}
 

@@ -10,6 +10,7 @@ import { Stat } from './models/Stat';
 import sample from "./sample.png";
 
 export function OCRPage() {
+	const parentRef = useRef<HTMLDivElement>(null);
 	const divRef = useRef<HTMLDivElement>(null);
 	const canvasRef = useRef<HTMLCanvasElement>(null)
 	const inputRef = useRef<HTMLInputElement>(null)
@@ -87,13 +88,14 @@ export function OCRPage() {
 
 		const ocrElement = divRef.current;
 		const inputElement = inputRef.current;
+		const parentElement = parentRef.current
 
 		ocrElement?.addEventListener('dragenter', handleDragIn);
 		ocrElement?.addEventListener('dragleave', handleDragOut);
 		ocrElement?.addEventListener('dragover', handleDrag);
 		ocrElement?.addEventListener('drop', handleDrop);
-		ocrElement?.addEventListener('paste', handlePaste);
 		ocrElement?.addEventListener('click', handleClick);
+		parentElement?.addEventListener('paste', handlePaste);
 		inputElement?.addEventListener('change', handleFileUpload);
 
 		return () => {
@@ -101,13 +103,13 @@ export function OCRPage() {
 			ocrElement?.removeEventListener('dragleave', handleDragOut)
 			ocrElement?.removeEventListener('dragover', handleDrag)
 			ocrElement?.removeEventListener('drop', handleDrop)
-			ocrElement?.removeEventListener('paste', handlePaste)
 			ocrElement?.removeEventListener('click', handleClick)
+			parentElement?.removeEventListener('paste', handlePaste)
 			inputElement?.removeEventListener('change', handleFileUpload);
 		};
 	}, [])
 	return (
-		<div className="OCRPage">
+		<div ref={parentRef} className="OCRPage">
 			<div>
 
 				<div ref={divRef} className="input-section">

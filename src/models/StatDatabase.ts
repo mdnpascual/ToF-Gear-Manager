@@ -391,3 +391,32 @@ export const allStats = [
 	atkStat,
 	resStat,
 ]
+
+export const basicStats = [
+	frostAtkStat,
+	flameAtkStat,
+	voltAtkStat,
+	physResStat,
+	frostResStat,
+	flameResStat,
+	voltResStat,
+	hpStat,
+	atkStat,
+	resStat
+]
+
+export const pctStats = [
+	physDmgBoost,
+	frostDmgBoost,
+	flameDmgBoost,
+	voltDmgBoost,
+	physAtkStatPct,
+	frostAtkStatPct,
+	flameAtkStatPct,
+	voltAtkStatPct,
+	physResStatPct,
+	frostResStatPct,
+	flameResStatPct,
+	voltResStatPct,
+	hpStatPct
+]
