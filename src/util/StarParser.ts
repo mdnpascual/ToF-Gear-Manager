@@ -18,7 +18,7 @@ export const getStarCount = async (
 		var inputImg = cv.imread(inputFile);
 		var starImg = cv.imread(starFile);
 
-		// GRAYSCALE AND GET EDGE INPUT
+		// GRAYSCALE  INPUT
 		var inputGray = new cv.Mat();
 		cv.cvtColor(inputImg, inputGray, cv.COLOR_BGR2GRAY);
 
@@ -91,9 +91,11 @@ export const matchTemplateGetStarCount = async (
 
 		if(count !== 0){
 			console.log("Star Count: " + count);
-			cv.imshow(canvasRef.current!, inputImg);
-			cv.imshow(starCanvasRef.current!, starImg);
 		}
+
+		cv.imshow(canvasRef.current!, inputImg);
+		cv.imshow(starCanvasRef.current!, starImg);
+
 		return count;
 }
 

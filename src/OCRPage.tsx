@@ -108,18 +108,28 @@ export function OCRPage() {
 		};
 	}, [])
 	return (
-		<div ref={divRef} className="OCRPage">
+		<div className="OCRPage">
 			<div>
-				<input ref={inputRef} type="file" style={{ display: "none" }}/>
-				<img src={logo} className="App-logo" alt="logo" />
-				{statsArray.length == 1 && <div>
+
+				<div ref={divRef} className="input-section">
+					<input ref={inputRef} type="file" style={{ display: "none" }}/>
+					<img src={logo} className="App-logo" alt="logo" />
+				</div>
+
+				{statsArray.length == 1 && <div className="instructions">
 					<p>CLICK, PASTE (Ctrl+V), OR DRAG SCREENSHOT IN SPINNY THING TO START ANALYZING SCREENSHOT</p>
 					<img src={sample} className="sample" alt="sample" />
 				</div>}
 			</div>
-			<Results data={statsArray} starDetected={starDetected}/>
-			<canvas ref={canvasRef}/>
-			<canvas ref={starCanvasRef}/>
+
+			<div className="results-section">
+				<Results data={statsArray} starDetected={starDetected}/>
+			</div>
+
+			<div className="debug-section">
+				<canvas ref={canvasRef}/>
+			</div>
+
 		</div>
 	)
 }

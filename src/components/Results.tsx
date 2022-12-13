@@ -10,7 +10,7 @@ export function Results( { data, starDetected } : {data : Stat[], starDetected: 
 						<h4>{elem.name} : {elem.result} {getAdditionalResult(elem)}</h4>
 					)
 				})}
-				<h4> Efficiency: {computeEfficiency(data)}  </h4>
+				<h4> Overall Efficiency: {computeEfficiency(data, starDetected)}  </h4>
 			</div>}
 		</div>
 	);
@@ -20,10 +20,13 @@ export const getAdditionalResult = (stat: Stat) => {
 	if (stat.name === "CS"){
 		return "";
 	}
-	return  "(" + stat.upgrades + " Upgrades, Efficiency: " + (stat.efficiency!*100) + "%)";
+	return  "(" + stat.upgrades + " Upgrades, Efficiency: " + Math.ceil(stat.efficiency!*10000) / 100 + "%)";
 }
 
-export const computeEfficiency = (stats: Stat[]) => {
+export const computeEfficiency = (stats: Stat[], starDetected: number) => {
+	if(starDetected === 0){
+		return "100%"
+	}
 	var total = 0;
 	var count = 0;
 	for (const stat of stats){
