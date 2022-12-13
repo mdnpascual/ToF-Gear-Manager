@@ -7,11 +7,13 @@ import { getRarity }from './util/RarityParser';
 import { getStarCount }from './util/StarParser';
 import {Results} from './components/Results';
 import { Stat } from './models/Stat';
+import sample from "./sample.png";
 
 export function OCRPage() {
 	const divRef = useRef<HTMLDivElement>(null);
 	const canvasRef = useRef<HTMLCanvasElement>(null)
 	const starCanvasRef = useRef<HTMLCanvasElement>(null)
+	const inputRef = useRef<HTMLInputElement>(null)
 
 	const [imageFile, setImageData] = React.useState(new File([""], "filename"));
 	const [statsArray, setstatsArray] = React.useState([new Stat("", "")]);
@@ -49,39 +51,51 @@ export function OCRPage() {
 
 	useEffect(() => {
 		const handleDrag = (e: Event) => {
-			e.preventDefault()
-			e.stopPropagation()
+			e.preventDefault();
+			e.stopPropagation();
 		}
 		const handleDragIn =  (e: Event) => {
-			e.preventDefault()
-			e.stopPropagation()
+			e.preventDefault();
+			e.stopPropagation();
 		}
 		const handleDragOut =  (e: Event) => {
-			e.preventDefault()
-			e.stopPropagation()
+			e.preventDefault();
+			e.stopPropagation();
 		}
 		const handleDrop =  (e: DragEvent) => {
-			e.preventDefault()
-			e.stopPropagation()
+			e.preventDefault();
+			e.stopPropagation();
 			var clipboardData = e.dataTransfer;
 			setImageData(clipboardData!.files[0]);
 		}
 		const handlePaste = (e: ClipboardEvent) => {
-			e.preventDefault()
-			e.stopPropagation()
+			e.preventDefault();
+			e.stopPropagation();
 			console.log(e)
 			var clipboardData = e.clipboardData;
 			console.log(clipboardData!.files[0]);
 			setImageData(clipboardData!.files[0]);
 		}
+		const handleClick = (e: MouseEvent) => {
+			inputRef.current?.click();
+		}
+		const handleFileUpload = (e: Event) => {
+			var files = inputRef.current?.files;
+			if (files?.length == 1){
+				setImageData(files[0]);
+			}
+		}
 
 		const ocrElement = divRef.current;
+		const inputElement = inputRef.current;
 
-		ocrElement?.addEventListener('dragenter', handleDragIn)
-		ocrElement?.addEventListener('dragleave', handleDragOut)
-		ocrElement?.addEventListener('dragover', handleDrag)
-		ocrElement?.addEventListener('drop', handleDrop)
-		ocrElement?.addEventListener('paste', handlePaste)
+		ocrElement?.addEventListener('dragenter', handleDragIn);
+		ocrElement?.addEventListener('dragleave', handleDragOut);
+		ocrElement?.addEventListener('dragover', handleDrag);
+		ocrElement?.addEventListener('drop', handleDrop);
+		ocrElement?.addEventListener('paste', handlePaste);
+		ocrElement?.addEventListener('click', handleClick);
+		inputElement?.addEventListener('change', handleFileUpload);
 
 		return () => {
 			ocrElement?.removeEventListener('dragenter', handleDragIn)
@@ -89,13 +103,19 @@ export function OCRPage() {
 			ocrElement?.removeEventListener('dragover', handleDrag)
 			ocrElement?.removeEventListener('drop', handleDrop)
 			ocrElement?.removeEventListener('paste', handlePaste)
+			ocrElement?.removeEventListener('click', handleClick)
+			inputElement?.removeEventListener('change', handleFileUpload);
 		};
 	}, [])
 	return (
 		<div ref={divRef} className="OCRPage">
 			<div>
+				<input ref={inputRef} type="file" style={{ display: "none" }}/>
 				<img src={logo} className="App-logo" alt="logo" />
-				<p>DROP SCREENSHOT ON SPINNY THING</p>
+				{statsArray.length == 1 && <div>
+					<p>CLICK, PASTE (Ctrl+V), OR DRAG SCREENSHOT IN SPINNY THING TO START ANALYZING SCREENSHOT</p>
+					<img src={sample} className="sample" alt="sample" />
+				</div>}
 			</div>
 			<Results data={statsArray} starDetected={starDetected}/>
 			<canvas ref={canvasRef}/>
