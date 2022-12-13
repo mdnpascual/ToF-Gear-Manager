@@ -4,8 +4,7 @@ const { loadImage } = require('canvas');
 
 export const getStarCount = async (
 	file : File,
-	canvasRef : React.RefObject<HTMLCanvasElement>,
-	starCanvasRef : React.RefObject<HTMLCanvasElement>) => {
+	canvasRef : React.RefObject<HTMLCanvasElement>) => {
 
 		var count = 0;
 
@@ -33,7 +32,7 @@ export const getStarCount = async (
 			var starScaled = new cv.Mat(starGray.rows * scale, starGray.cols * scale, 1);
 			cv.resize(starGray, starScaled, starScaled.size(), starGray.rows * scale, starGray.cols * scale, cv.INTER_LANCZOS4)
 
-			count = await matchTemplateGetStarCount(inputGray, starScaled, canvasRef, starCanvasRef);
+			count = await matchTemplateGetStarCount(inputGray, starScaled, canvasRef);
 			if(count !== 0){
 				console.log("Scaled used: " + scale);
 				break;
@@ -48,8 +47,7 @@ export const getStarCount = async (
 export const matchTemplateGetStarCount = async (
 	inputImg : cv.Mat,
     starImg : cv.Mat,
-	canvasRef : React.RefObject<HTMLCanvasElement>,
-	starCanvasRef : React.RefObject<HTMLCanvasElement>) => {
+	canvasRef : React.RefObject<HTMLCanvasElement>) => {
 		// TEMPLATE MATCHING
 		var result = new cv.Mat();
 		cv.matchTemplate(inputImg, starImg, result, 5);
@@ -94,7 +92,6 @@ export const matchTemplateGetStarCount = async (
 		}
 
 		cv.imshow(canvasRef.current!, inputImg);
-		cv.imshow(starCanvasRef.current!, starImg);
 
 		return count;
 }

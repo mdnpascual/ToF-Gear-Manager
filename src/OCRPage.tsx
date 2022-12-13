@@ -12,7 +12,6 @@ import sample from "./sample.png";
 export function OCRPage() {
 	const divRef = useRef<HTMLDivElement>(null);
 	const canvasRef = useRef<HTMLCanvasElement>(null)
-	const starCanvasRef = useRef<HTMLCanvasElement>(null)
 	const inputRef = useRef<HTMLInputElement>(null)
 
 	const [imageFile, setImageData] = React.useState(new File([""], "filename"));
@@ -35,7 +34,7 @@ export function OCRPage() {
 			var {raw, ocrResults, errors} = parseOCR(text);
 
 			var rarity = await getRarity(imageFile);
-			var starCount = await getStarCount(imageFile, canvasRef, starCanvasRef);
+			var starCount = await getStarCount(imageFile, canvasRef);
 			var {data, overallEfficiency} = gradeArmor(ocrResults, rarity, starCount);
 
 
