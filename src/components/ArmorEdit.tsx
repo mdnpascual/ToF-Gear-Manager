@@ -1,12 +1,17 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
+import cv from "@techstark/opencv-js"
 import { ArmorType, allArmorTypes } from "../models/ArmorType";
 import { Stat } from "../models/Stat";
-import { Box, Grid, Button, Select, MenuItem, InputLabel, FormControl, SelectChangeEvent, Modal } from '@mui/material';
+import { Box, Grid, Button, SelectChangeEvent, Modal } from '@mui/material';
 import ImageIcon from '@mui/icons-material/Image';
 import SaveIcon from '@mui/icons-material/Save';
 import sample from "../sample.png";
+import dragdrop from "../dragdrop.png";
 import { allStats } from '../models/StatDatabase';
 import { ArmorEditSelect } from './ArmorEditSelect';
+import { InstructionModal } from './InstructionModal';
+
+const { loadImage } = require('canvas');
 
 const style = {
 	position: 'absolute' as 'absolute',
@@ -28,9 +33,9 @@ export function ArmorEdit ( {data, starDetected, armorType, armorRarity, canvasR
 	inputRef: React.RefObject<HTMLInputElement>
 } ){
 
-	const [armorTypeInput, setArmorType] = React.useState("None");
-	const [substat1Input, setSubstat1] = React.useState("None");
-	const [openTut, setOpenTut] = React.useState(false);
+	const [armorTypeInput, setArmorType] = useState("None");
+	const [substat1Input, setSubstat1] = useState("None");
+	const [openTut, setOpenTut] = useState(false);
 
 	const handleOpenTut = () => setOpenTut(true);
 	const handleCloseTut = () => setOpenTut(false);
@@ -47,20 +52,25 @@ export function ArmorEdit ( {data, starDetected, armorType, armorRarity, canvasR
 		return armorType.allowedStats ?? allStats;
 	}
 
+	useEffect(() => {
+		if(canvasRef.current){
+			const fillCanvas = async () => {
+				var dragDropImage = await loadImage(dragdrop);
+				cv['onRuntimeInitialized']=()=>{
+					cv.imshow(canvasRef.current!, cv.imread(dragDropImage));
+				}
+			}
+			fillCanvas();
+		}
+	}, [])
+
 
 	return (
 		<Box sx={style}>
-			{/* INSTRUCTION MODAL */}
-			<Modal
+			<InstructionModal
 				open={openTut}
 				onClose={handleCloseTut}
-				aria-labelledby="modal-modal-title"
-				aria-describedby="modal-modal-description"
-			>
-				<Box sx={style}>
-					<img src={sample} className="sample" alt="sample" width="100%" />
-				</Box>
-			</Modal>
+				imgSrc={sample} />
 			{/* START GRID */}
 			<Grid container spacing={2} >
 				{/* LEFT SIDE: CANVAS, UPLOAD AND TUTORIAL BUTTON */}

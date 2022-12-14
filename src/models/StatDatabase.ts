@@ -393,6 +393,7 @@ export const allStats = [
 ]
 
 export const basicStats = [
+	physAtkStat,
 	frostAtkStat,
 	flameAtkStat,
 	voltAtkStat,

@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import { Box, Grid, Button, Select, MenuItem, InputLabel, FormControl, SelectChangeEvent, Modal } from '@mui/material';
+import React from 'react';
+import { Select, MenuItem, InputLabel, FormControl, SelectChangeEvent } from '@mui/material';
 
 export function ArmorEditSelect( {
 	id,
