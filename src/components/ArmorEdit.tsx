@@ -47,23 +47,39 @@ export function ArmorEdit ( {data, starDetected, armorType, armorRarity, canvasR
 		setSubstat1(event.target.value as string);
 	};
 
-
-	const getArmorType = (type: ArmorType) => {
-		return armorType.allowedStats ?? allStats;
+	const getArmorType = (type: string) => {
+		if (type !== "None"){
+			var armorType = allArmorTypes.find((typeArmor) => typeArmor.type === type);
+			return armorType ? armorType.allowedStats! : allStats;
+		} else {
+			return allStats;
+		}
 	}
 
 	useEffect(() => {
-		if(canvasRef.current){
+		if(canvasRef.current && data.length === 1){
 			const fillCanvas = async () => {
 				var dragDropImage = await loadImage(dragdrop);
-				cv['onRuntimeInitialized']=()=>{
+				if (cv.getBuildInformation!){
 					cv.imshow(canvasRef.current!, cv.imread(dragDropImage));
+				} else {
+					cv['onRuntimeInitialized']=()=>{
+						cv.imshow(canvasRef.current!, cv.imread(dragDropImage));
+					}
 				}
+
 			}
 			fillCanvas();
 		}
-	}, [])
 
+		if(data.length > 1){
+			setSubstat1(data[1].name);
+		}
+
+		if(armorType.type){
+			setArmorType(armorType.type);
+		}
+	}, [canvasRef, data, armorType])
 
 	return (
 		<Box sx={style}>
@@ -114,9 +130,9 @@ export function ArmorEdit ( {data, starDetected, armorType, armorRarity, canvasR
 							<ArmorEditSelect
 								id="substat-1"
 								label="Substat 1"
-								value={(substat1Input === "None" && data.length > 1) ? data[1].name ?? "None" : substat1Input}
+								value={substat1Input}
 								onChange={handleSubStat1Change}
-								options={getArmorType(armorType)}
+								options={getArmorType(armorTypeInput)}
 								propertyToDisplay="name"
 							/>
 						</Grid>
