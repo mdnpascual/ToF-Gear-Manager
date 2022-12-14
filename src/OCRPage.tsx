@@ -1,27 +1,38 @@
 import React, { useEffect, useRef } from 'react';
-import logo from './logo.svg';
 import { createWorker } from 'tesseract.js';
 import { parseOCR }from './util/OCRParser';
 import { gradeArmor }from './util/ArmorGrader';
-import { getRarity }from './util/RarityParser';
+import { getRarityByColor }from './util/RarityImageParser';
 import { getStarCount }from './util/StarParser';
-import {Results} from './components/Results';
+import {ArmorEdit} from './components/ArmorEdit';
 import { Stat } from './models/Stat';
-import sample from "./sample.png";
+import { ArmorType } from './models/ArmorType';
 
 export function OCRPage() {
 	const parentRef = useRef<HTMLDivElement>(null);
-	const divRef = useRef<HTMLDivElement>(null);
 	const canvasRef = useRef<HTMLCanvasElement>(null)
 	const inputRef = useRef<HTMLInputElement>(null)
 
 	const [imageFile, setImageData] = React.useState(new File([""], "filename"));
-	const [statsArray, setstatsArray] = React.useState([new Stat("", "")]);
-	const [starDetected, setstarDetected] = React.useState(0);
+	const [statsArray, setStatsArray] = React.useState([new Stat("", "")]);
+	const [starDetected, setStarDetected] = React.useState(0);
+	const [armorType, setArmorType] = React.useState(new ArmorType());
+	const [armorRarity, setRarity] = React.useState(5);
 
 	const worker = createWorker({
 		// logger: m => console.log(m)
 	});
+
+	const style = {
+		position: 'absolute' as 'absolute',
+		top: '50%',
+		left: '50%',
+		transform: 'translate(-50%, -50%)',
+		width: 0.8,
+		border: '2px solid #000',
+		boxShadow: 24,
+		p: 4,
+	};
 
 	useEffect(() => {
 		const ocrWorker = (async () => {
@@ -32,19 +43,21 @@ export function OCRPage() {
 				tessedit_char_whitelist: '0123456789+:%.ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
 			});
 			const { data: { text } } = await worker.recognize(imageFile);
-			var {raw, ocrResults, errors} = parseOCR(text);
+			var { raw, ocrResults, armorType, rarity } = parseOCR(text);
 
-			var rarity = await getRarity(imageFile);
+			rarity = rarity === 0 ? await getRarityByColor(imageFile) : rarity;
 			var starCount = await getStarCount(imageFile, canvasRef);
 			var {data, overallEfficiency} = gradeArmor(ocrResults, rarity, starCount);
 
-
 			console.log(raw);
+			console.log(armorType);
 			console.log(rarity);
 			console.log(data);
 			console.log(overallEfficiency);
-			setstarDetected(starCount);
-			setstatsArray(ocrResults);
+			setStarDetected(starCount);
+			setStatsArray(ocrResults);
+			setArmorType(armorType);
+			setRarity(rarity);
 			await worker.terminate();
 		})()
 	}, [imageFile]);
@@ -86,7 +99,7 @@ export function OCRPage() {
 			}
 		}
 
-		const ocrElement = divRef.current;
+		const ocrElement = canvasRef.current;
 		const inputElement = inputRef.current;
 		const parentElement = parentRef.current
 
@@ -110,26 +123,16 @@ export function OCRPage() {
 	}, [])
 	return (
 		<div ref={parentRef} className="OCRPage">
-			<div>
 
-				<div ref={divRef} className="input-section">
-					<input ref={inputRef} type="file" style={{ display: "none" }}/>
-					<img src={logo} className="App-logo" alt="logo" />
-				</div>
+			<ArmorEdit
+				data={statsArray}
+				starDetected={starDetected}
+				armorType={armorType}
+				armorRarity={armorRarity}
+				canvasRef={canvasRef}
+				inputRef={inputRef}/>
 
-				{statsArray.length == 1 && <div className="instructions">
-					<p>CLICK, PASTE (Ctrl+V), OR DRAG SCREENSHOT IN SPINNY THING TO START ANALYZING SCREENSHOT</p>
-					<img src={sample} className="sample" alt="sample" />
-				</div>}
-			</div>
-
-			<div className="results-section">
-				<Results data={statsArray} starDetected={starDetected}/>
-			</div>
-
-			<div className="debug-section">
-				<canvas ref={canvasRef}/>
-			</div>
+				<input ref={inputRef} type="file" style={{ display: "none" }}/>
 
 		</div>
 	)

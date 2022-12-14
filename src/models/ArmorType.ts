@@ -1,7 +1,7 @@
 import { StatDatabase, basicStats, pctStats, critStat,  allStats } from "./StatDatabase";
 
-export class ArmorTypeDatabase{
-	constructor(init?: Partial<ArmorTypeDatabase>){
+export class ArmorType{
+	constructor(init?: Partial<ArmorType>){
 		Object.assign(this, init);
 	}
 	type?: string;
@@ -20,7 +20,7 @@ const bracerJson = {
 	regex5: /bracer/g
 }
 
-export const bracer = new ArmorTypeDatabase(bracerJson);
+export const bracer = new ArmorType(bracerJson);
 bracer.allowedStats = basicStats
 
 const helmJson = {
@@ -31,7 +31,7 @@ const helmJson = {
 	regex5: /ss[\s]*helm/g
 }
 
-export const helm = new ArmorTypeDatabase(helmJson);
+export const helm = new ArmorType(helmJson);
 helm.allowedStats = basicStats
 
 const glovesJson = {
@@ -42,7 +42,7 @@ const glovesJson = {
 	regex5: /handgu/g
 }
 
-export const gloves = new ArmorTypeDatabase(glovesJson);
+export const gloves = new ArmorType(glovesJson);
 gloves.allowedStats = [...basicStats, critStat]
 
 const beltJson = {
@@ -53,7 +53,7 @@ const beltJson = {
 	regex5: /ss[\s]*belt/g
 }
 
-export const belt = new ArmorTypeDatabase(beltJson);
+export const belt = new ArmorType(beltJson);
 belt.allowedStats = basicStats
 
 const shoulderJson = {
@@ -64,7 +64,7 @@ const shoulderJson = {
 	regex5: /spauld/g
 }
 
-export const shoulder = new ArmorTypeDatabase(shoulderJson);
+export const shoulder = new ArmorType(shoulderJson);
 shoulder.allowedStats = basicStats
 
 const bootsJson = {
@@ -75,7 +75,7 @@ const bootsJson = {
 	regex5: /sabat/g
 }
 
-export const boots = new ArmorTypeDatabase(bootsJson);
+export const boots = new ArmorType(bootsJson);
 boots.allowedStats = [...basicStats, critStat]
 
 const pantsJson = {
@@ -86,7 +86,7 @@ const pantsJson = {
 	regex5: /gguard/g
 }
 
-export const pants = new ArmorTypeDatabase(pantsJson);
+export const pants = new ArmorType(pantsJson);
 pants.allowedStats = basicStats
 
 const chestJson = {
@@ -97,7 +97,7 @@ const chestJson = {
 	regex5: /ss[\s]*arm/g
 }
 
-export const chest = new ArmorTypeDatabase(chestJson);
+export const chest = new ArmorType(chestJson);
 chest.allowedStats = basicStats
 
 const visorJson = {
@@ -108,7 +108,7 @@ const visorJson = {
 	regex5: /ss[\s]*tac/g
 }
 
-export const visor = new ArmorTypeDatabase(visorJson);
+export const visor = new ArmorType(visorJson);
 visor.allowedStats = allStats
 
 const engineJson = {
@@ -119,7 +119,7 @@ const engineJson = {
 	regex5: /ss[\s]*com/g
 }
 
-export const engine = new ArmorTypeDatabase(engineJson);
+export const engine = new ArmorType(engineJson);
 engine.allowedStats = [...basicStats, ...pctStats]
 
 export const allArmorTypes = [

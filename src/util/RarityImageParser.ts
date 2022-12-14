@@ -1,7 +1,7 @@
 import { FastAverageColor } from 'fast-average-color';
 import Color from 'colorjs.io';
 
-export const getRarity = async (file : File)  => {
+export const getRarityByColor = async (file : File)  => {
 	var imageBitmap = await  createImageBitmap(file);
 
 	const fac = new FastAverageColor();

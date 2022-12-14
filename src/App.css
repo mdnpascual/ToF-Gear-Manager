@@ -28,6 +28,12 @@
   color: #61dafb;
 }
 
+/* TODO: REMOVE DEBUG */
+.MuiGrid-root{
+  border: 2px solid;
+  border-color: red;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

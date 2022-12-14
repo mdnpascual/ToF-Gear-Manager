@@ -1,11 +1,13 @@
 import { allStats }from '../models/StatDatabase';
-import { allArmorTypes }from '../models/ArmorTypeDatabase';
+import { allArmorTypes, ArmorType }from '../models/ArmorType';
 import { Stat } from '../models/Stat';
 
 export const parseOCR = (unclean: string) => {
 	var loweredCase = unclean.toLowerCase();
 	var results = [];
 	var errors = [];
+	var armorType: ArmorType = new ArmorType();
+	var rarity = 0;
 
 	// Find CS
 	var finderCS = /cs:[0-9]+/g;
@@ -37,16 +39,18 @@ export const parseOCR = (unclean: string) => {
 		}
 	}
 
-	for(const types of allArmorTypes){
-		var regex5Result = loweredCase.match(types.regex5!);
+	for(const type of allArmorTypes){
+		var regex5Result = loweredCase.match(type.regex5!);
 		if(regex5Result != null){
-			console.log("TODO: 5 STAR DETECTED!");
-			console.log(types.type);
+			armorType = type;
+			rarity = 5;
+			console.log("SSR " + armorType.type + " Detected")
 		} else {
-			var regex4Result = loweredCase.match(types.regex4!);
+			var regex4Result = loweredCase.match(type.regex4!);
 			if(regex4Result != null){
-				console.log("TODO: 4 STAR DETECTED!");
-				console.log(types.type);
+				armorType = type;
+				rarity = 4;
+				console.log("SR " + armorType.type + " Detected")
 			}
 		}
 	}
@@ -58,6 +62,8 @@ export const parseOCR = (unclean: string) => {
 	return {
 		raw: loweredCase,
 		ocrResults: results,
+		armorType: armorType,
+		rarity: rarity,
 		errors: errors
 	};
 
