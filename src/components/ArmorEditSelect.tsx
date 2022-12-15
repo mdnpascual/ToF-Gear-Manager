@@ -8,16 +8,18 @@ export function ArmorEditSelect( {
 	onChange,
 	options,
 	propertyToDisplay,
+	disabled = false
 } : {
 	id: string,
 	label: string,
 	value: string,
 	onChange: ((event: SelectChangeEvent<string>, child: React.ReactNode) => void),
 	options: any[],
-	propertyToDisplay: string
+	propertyToDisplay: string,
+	disabled?: boolean
 } ){
 	return (
-		<FormControl fullWidth>
+		<FormControl fullWidth disabled={disabled}>
 			<InputLabel id={id} sx={{color: 'white'}}>{label}</InputLabel>
 			<Select
 				labelId={id}
