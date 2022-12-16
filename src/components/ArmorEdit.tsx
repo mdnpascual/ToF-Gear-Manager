@@ -105,16 +105,16 @@ export function ArmorEdit ( {data, starDetected, armorType, armorRarity, canvasR
 	};
 
 	const handleValue1Change = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-		setValue1(parseInt(event.target.value));
+		setValue1(parseFloat(event.target.value));
 	};
 	const handleValue2Change = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-		setValue2(parseInt(event.target.value));
+		setValue2(parseFloat(event.target.value));
 	};
 	const handleValue3Change = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-		setValue3(parseInt(event.target.value));
+		setValue3(parseFloat(event.target.value));
 	};
 	const handleValue4Change = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-		setValue4(parseInt(event.target.value));
+		setValue4(parseFloat(event.target.value));
 	};
 
 	const getArmorType = (type: string) => {
@@ -151,10 +151,10 @@ export function ArmorEdit ( {data, starDetected, armorType, armorRarity, canvasR
 			setUpgrade2(data[2].upgrades!.toString());
 			setUpgrade3(data[3].upgrades!.toString());
 			setUpgrade4(data[4].upgrades!.toString());
-			setValue1(parseInt(data[1].result));
-			setValue2(parseInt(data[2].result));
-			setValue3(parseInt(data[3].result));
-			setValue4(parseInt(data[4].result));
+			setValue1(parseFloat(data[1].result));
+			setValue2(parseFloat(data[2].result));
+			setValue3(parseFloat(data[3].result));
+			setValue4(parseFloat(data[4].result));
 			setArmorUpgradeCount(data.reduce((sum, elem) => sum + (elem.upgrades ?? 0), 0).toString());
 		}
 
