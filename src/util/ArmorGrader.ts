@@ -107,7 +107,11 @@ export const getEfficiency = (data: Stat, rarity: number) => {
 export const bumpDown = (data: Stat[], difference: number,  rarity: number) => {
 	console.log("bumping down");
 	while(difference !== 0){
-		var minVal = Math.min.apply(null, data.map((e) => e.efficiency ?? 9999))
+		var minVal = Math.min.apply(null, data.map((e) => {
+			if(e.upgrades === 1)
+				return 9999;
+			return e.efficiency ?? 9999
+		}))
 		var minValIndex = data.findIndex(e => e.efficiency === minVal);
 		var minStat = data[minValIndex];
 		minStat.upgrades = (minStat.upgrades ?? 0) - 1;
