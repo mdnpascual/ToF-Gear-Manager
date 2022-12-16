@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/ToF-Gear-Manager/static/css/main.1c5072c3.css",
-    "main.js": "/ToF-Gear-Manager/static/js/main.6f71f6da.js",
+    "main.js": "/ToF-Gear-Manager/static/js/main.e152d243.js",
     "static/js/787.93c69536.chunk.js": "/ToF-Gear-Manager/static/js/787.93c69536.chunk.js",
     "static/media/sample.png": "/ToF-Gear-Manager/static/media/sample.ec69437a667a06557445.png",
     "static/media/dragdrop.png": "/ToF-Gear-Manager/static/media/dragdrop.e26eb8dc5f8439e62251.png",
     "index.html": "/ToF-Gear-Manager/index.html",
     "main.1c5072c3.css.map": "/ToF-Gear-Manager/static/css/main.1c5072c3.css.map",
-    "main.6f71f6da.js.map": "/ToF-Gear-Manager/static/js/main.6f71f6da.js.map",
+    "main.e152d243.js.map": "/ToF-Gear-Manager/static/js/main.e152d243.js.map",
     "787.93c69536.chunk.js.map": "/ToF-Gear-Manager/static/js/787.93c69536.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.1c5072c3.css",
-    "static/js/main.6f71f6da.js"
+    "static/js/main.e152d243.js"
   ]
 }
