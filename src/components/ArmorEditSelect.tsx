@@ -8,7 +8,7 @@ export function ArmorEditSelect( {
 	onChange,
 	options,
 	propertyToDisplay,
-	disabled = false
+	disabled = false,
 } : {
 	id: string,
 	label: string,

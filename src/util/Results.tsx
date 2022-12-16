@@ -1,20 +1,4 @@
-import React from 'react';
 import { Stat } from '../models/Stat';
-
-export function Results( { data, starDetected } : {data : Stat[], starDetected: number}) {
-	return (
-		<div className="Results">
-			{data.length > 1 && <div>
-				{data.map((elem, i) => {
-					return (
-						<h4>{elem.name} : {elem.result} {getAdditionalResult(elem)}</h4>
-					)
-				})}
-				<h4> Overall Efficiency: {computeEfficiency(data, starDetected)}  </h4>
-			</div>}
-		</div>
-	);
-}
 
 export const getAdditionalResult = (stat: Stat) => {
 	if (stat.name === "CS"){
@@ -23,7 +7,7 @@ export const getAdditionalResult = (stat: Stat) => {
 	return  "(" + stat.upgrades + " Upgrades, Efficiency: " + Math.ceil(stat.efficiency!*10000) / 100 + "%)";
 }
 
-export const computeEfficiency = (stats: Stat[], starDetected: number) => {
+export const computeOverallEfficiency = (stats: Stat[], starDetected: number) => {
 	if(starDetected === 0){
 		return "100%"
 	}
@@ -37,4 +21,11 @@ export const computeEfficiency = (stats: Stat[], starDetected: number) => {
 	}
 	var avg = (total / count);
 	return Math.ceil(avg*10000) / 100 + "%";
+}
+
+export const computeEfficiency = (stat: Stat, starDetected: number) => {
+	if(starDetected === 0){
+		return "100%"
+	}
+	return Math.ceil(stat.efficiency!*10000) / 100 + "%";
 }
