@@ -93,7 +93,7 @@ const chestJson = {
 	type: "Chest",
 	name4: "Elite Combat Suit",
 	name5: "Fortress Armor",
-	regex4: /suit/g,
+	regex4: /at[\s]*suit/g,
 	regex5: /ss[\s]*arm/g
 }
 

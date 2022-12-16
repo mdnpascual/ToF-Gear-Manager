@@ -97,7 +97,7 @@ export const matchTemplateGetStarCount = async (
 }
 
 export const resolutionScales = [
-	1.0,
+	1.00,
 	0.49,
 	0.66,
 	0.3333,

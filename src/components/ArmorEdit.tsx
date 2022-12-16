@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import cv from "@techstark/opencv-js"
 import { ArmorType, allArmorTypes } from "../models/ArmorType";
 import { Stat } from "../models/Stat";
@@ -10,6 +10,7 @@ import dragdrop from "../dragdrop.png";
 import { allStats } from '../models/StatDatabase';
 import { ArmorEditSelect } from './ArmorEditSelect';
 import { InstructionModal } from './InstructionModal';
+import { ArmorEditUpgrade } from './ArmorEditUpgrade';
 
 const { loadImage } = require('canvas');
 
@@ -35,9 +36,19 @@ export function ArmorEdit ( {data, starDetected, armorType, armorRarity, canvasR
 
 	const [armorTypeInput, setArmorType] = useState("None");
 	const [armorRarityInput, setArmorRarity] = useState("None");
+	const [armorUpgradeCountInput, setArmorUpgradeCount] = useState("0");
 
 	const [substat1Input, setSubstat1] = useState("None");
 	const [substat2Input, setSubstat2] = useState("None");
+	const [substat3Input, setSubstat3] = useState("None");
+
+	const [upgrade1Input, setUpgrade1] = useState("0");
+	const [upgrade2Input, setUpgrade2] = useState("0");
+	const [upgrade3Input, setUpgrade3] = useState("0");
+
+	const [value1Input, setValue1] = useState(0);
+	const [value2Input, setValue2] = useState(0);
+	const [value3Input, setValue3] = useState(0);
 
 	const [openTut, setOpenTut] = useState(false);
 
@@ -50,12 +61,38 @@ export function ArmorEdit ( {data, starDetected, armorType, armorRarity, canvasR
 	const handleArmorRarityChange = (event: SelectChangeEvent) => {
 		setArmorRarity(event.target.value as string);
 	};
+	const handleArmorUpgradeCountChange = (event: SelectChangeEvent) => {
+		setArmorUpgradeCount(event.target.value as string);
+	};
 
 	const handleSubStat1Change = (event: SelectChangeEvent) => {
 		setSubstat1(event.target.value as string);
 	};
 	const handleSubStat2Change = (event: SelectChangeEvent) => {
 		setSubstat2(event.target.value as string);
+	};
+	const handleSubStat3Change = (event: SelectChangeEvent) => {
+		setSubstat3(event.target.value as string);
+	};
+
+	const handleUpgrade1Change = (event: SelectChangeEvent) => {
+		setUpgrade1(event.target.value as string);
+	};
+	const handleUpgrade2Change = (event: SelectChangeEvent) => {
+		setUpgrade3(event.target.value as string);
+	}
+	const handleUpgrade3Change = (event: SelectChangeEvent) => {
+		setUpgrade2(event.target.value as string);
+	};
+
+	const handleValue1Change = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+		setValue1(parseInt(event.target.value));
+	};
+	const handleValue2Change = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+		setValue2(parseInt(event.target.value));
+	};
+	const handleValue3Change = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+		setValue3(parseInt(event.target.value));
 	};
 
 	const getArmorType = (type: string) => {
@@ -86,6 +123,14 @@ export function ArmorEdit ( {data, starDetected, armorType, armorRarity, canvasR
 		if(data.length > 1){
 			setSubstat1(data[1].name);
 			setSubstat2(data[2].name);
+			setSubstat3(data[3].name);
+			setUpgrade1(data[1].upgrades!.toString());
+			setUpgrade2(data[2].upgrades!.toString());
+			setUpgrade3(data[3].upgrades!.toString());
+			setValue1(parseInt(data[1].result));
+			setValue2(parseInt(data[2].result));
+			setValue3(parseInt(data[3].result));
+			setArmorUpgradeCount(data.reduce((sum, elem) => sum + (elem.upgrades ?? 0), 0).toString());
 		}
 
 		if(armorRarity != null){
@@ -111,7 +156,7 @@ export function ArmorEdit ( {data, starDetected, armorType, armorRarity, canvasR
 			{/* START GRID */}
 			<Grid container spacing={2} >
 				{/* LEFT SIDE: CANVAS, UPLOAD AND TUTORIAL BUTTON */}
-				<Grid xs={4}>
+				<Grid xs={3}>
 					<Box sx={{border: '2px solid #000'}}>
 						<canvas ref={canvasRef} width="100%"/>
 					</Box>
@@ -135,7 +180,7 @@ export function ArmorEdit ( {data, starDetected, armorType, armorRarity, canvasR
 					</Grid>
 				</Grid>
 				{/* RIGHT SIDE: ALL INPUTS AND SAVE BUTTON */}
-				<Grid xs={8} sx={{p: 2, paddingRight: 0}}>
+				<Grid xs={9} sx={{p: 2, paddingRight: 0}}>
 					{/* ROW 1 */}
 					<Grid container spacing={2} sx={{p: 2, paddingRight: 0}}>
 						<Grid xs={4} sx={{p: 2}}>
@@ -149,7 +194,7 @@ export function ArmorEdit ( {data, starDetected, armorType, armorRarity, canvasR
 							/>
 						</Grid>
 						<Grid xs container spacing={0} sx={{p: 0}}>
-							<Grid xs={8} sx={{p: 2, paddingRight: 0}}>
+							<Grid xs={7} sx={{p: 2, paddingRight: 0}}>
 								<ArmorEditSelect
 									id="substat-1"
 									label="Substat 1"
@@ -160,11 +205,20 @@ export function ArmorEdit ( {data, starDetected, armorType, armorRarity, canvasR
 									disabled={armorTypeInput === "None"}
 								/>
 							</Grid>
-							<Grid xs={4} sx={{p: 2, paddingLeft: 0}}>
+							<Grid xs={1.5} sx={{p: 2, paddingLeft: 0, paddingRight: 0}}>
+								<ArmorEditUpgrade
+									id="upgrade-count-1"
+									value={upgrade1Input}
+									disabled={armorTypeInput === "None"}
+									label="Upgrades"
+									onChange={handleUpgrade1Change} />
+							</Grid>
+							<Grid xs={3.5} sx={{p: 2, paddingLeft: 0, paddingRight: 0}}>
 								<FilledInput
 									fullWidth
 									disabled={substat1Input === "None"}
-									value={data.length > 1 ? data[1].result : ""}
+									onChange={handleValue1Change}
+									value={value1Input}
 									sx={{input: {
 										textAlign: "right",
 										verticalAlign: "middle",
@@ -200,7 +254,7 @@ export function ArmorEdit ( {data, starDetected, armorType, armorRarity, canvasR
 							</FormControl>
 						</Grid>
 						<Grid xs container spacing={0} sx={{p: 0}}>
-							<Grid xs={8} sx={{p: 2, paddingRight: 0}}>
+							<Grid xs={7} sx={{p: 2, paddingRight: 0}}>
 								<ArmorEditSelect
 									id="substat-2"
 									label="Substat 2"
@@ -211,11 +265,74 @@ export function ArmorEdit ( {data, starDetected, armorType, armorRarity, canvasR
 									disabled={armorTypeInput === "None"}
 								/>
 							</Grid>
-							<Grid xs={4} sx={{p: 2, paddingLeft: 0}}>
+							<Grid xs={1.5} sx={{p: 2, paddingLeft: 0, paddingRight: 0}}>
+								<ArmorEditUpgrade
+									id="upgrade-count-2"
+									value={upgrade2Input}
+									disabled={armorTypeInput === "None"}
+									label="Upgrades"
+									onChange={handleUpgrade2Change} />
+							</Grid>
+							<Grid xs={3.5} sx={{p: 2, paddingLeft: 0, paddingRight: 0}}>
 								<FilledInput
 									fullWidth
 									disabled={substat2Input === "None"}
-									value={data.length > 1 ? data[2].result : ""}
+									onChange={handleValue2Change}
+									value={value2Input}
+									sx={{input: {
+										textAlign: "right",
+										verticalAlign: "middle",
+										color: "white",
+										backgroundColor: "#1976d2"}}} />
+							</Grid>
+						</Grid>
+					</Grid>
+					{/* ROW 3 */}
+					<Grid container spacing={2} sx={{p: 2, paddingRight: 0}}>
+						<Grid xs={4} sx={{p: 2}}>
+							<FormControl fullWidth disabled={armorTypeInput === "None"}>
+								<InputLabel id="upgrade-count" sx={{color: 'white'}}>Upgrade Count</InputLabel>
+								<Select
+									labelId="upgrade-count"
+									value={armorUpgradeCountInput}
+									label="Upgrade Count"
+									onChange={handleArmorUpgradeCountChange}
+									sx={{color: 'white', backgroundColor: '#1976d2', xs: "12"}}>
+										<MenuItem key={"0"} value={"0"}> ☆☆☆☆☆ </MenuItem>
+										<MenuItem key={"1"} value={"1"}> ★☆☆☆☆ </MenuItem>
+										<MenuItem key={"2"} value={"2"}> ★★☆☆☆ </MenuItem>
+										<MenuItem key={"3"} value={"3"}> ★★★☆☆ </MenuItem>
+										<MenuItem key={"4"} value={"4"}> ★★★★☆ </MenuItem>
+										<MenuItem key={"5"} value={"5"}> ★★★★★ </MenuItem>
+								</Select>
+							</FormControl>
+						</Grid>
+						<Grid xs container spacing={0} sx={{p: 0}}>
+							<Grid xs={7} sx={{p: 2, paddingRight: 0}}>
+								<ArmorEditSelect
+									id="substat-3"
+									label="Substat 3"
+									value={substat3Input}
+									onChange={handleSubStat3Change}
+									options={getArmorType(armorTypeInput)}
+									propertyToDisplay="name"
+									disabled={armorTypeInput === "None"}
+								/>
+							</Grid>
+							<Grid xs={1.5} sx={{p: 2, paddingLeft: 0, paddingRight: 0}}>
+								<ArmorEditUpgrade
+									id="upgrade-count-3"
+									value={upgrade3Input}
+									disabled={armorTypeInput === "None"}
+									label="Upgrades"
+									onChange={handleUpgrade3Change} />
+							</Grid>
+							<Grid xs={3.5} sx={{p: 2, paddingLeft: 0, paddingRight: 0}}>
+								<FilledInput
+									fullWidth
+									disabled={substat2Input === "None"}
+									onChange={handleValue3Change}
+									value={value3Input}
 									sx={{input: {
 										textAlign: "right",
 										verticalAlign: "middle",
