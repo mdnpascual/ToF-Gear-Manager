@@ -12,4 +12,4 @@ Planned roadmap:
 - Store database of armor pieces locally
 - Compare your gear from others (Top x% or bottom x%)
 
-  <img src="https://github.com/mdnpascual/ToF-Gear-Manager/blob/master/readmeScreenshot.jpg?raw=true" height="800px" alt="current screenshot" />
+  <img src="https://github.com/mdnpascual/ToF-Gear-Manager/blob/master/readmeScreenshot.jpg?raw=true" height="100%" alt="current screenshot" />
