@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "ToF Gear Manager",
+  "name": "Rates your Gear Rolls",
   "icons": [
     {
       "src": "favicon.ico",
