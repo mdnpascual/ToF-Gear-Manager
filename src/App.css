@@ -34,6 +34,12 @@
   border-color: red;
 } */
 
+.instruction{
+  width: 100%;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

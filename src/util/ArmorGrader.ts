@@ -107,11 +107,14 @@ export const getEfficiency = (data: Stat, rarity: number) => {
 export const bumpDown = (data: Stat[], difference: number,  rarity: number) => {
 	console.log("bumping down");
 	while(difference !== 0){
+		// Get minimum efficiency
 		var minVal = Math.min.apply(null, data.map((e) => {
 			if(e.upgrades === 1)
 				return 9999;
 			return e.efficiency ?? 9999
 		}))
+
+		// Bump upgrade stars (increase efficiency)
 		var minValIndex = data.findIndex(e => e.efficiency === minVal);
 		var minStat = data[minValIndex];
 		minStat.upgrades = (minStat.upgrades ?? 0) - 1;
@@ -123,7 +126,10 @@ export const bumpDown = (data: Stat[], difference: number,  rarity: number) => {
 export const bumpUp = (data: Stat[], difference: number,  rarity: number) => {
 	console.log("bumping up");
 	while(difference !== 0){
+		// Get maximum efficiency
 		var maxVal = Math.max.apply(null, data.map((e) => e.efficiency ?? -1));
+
+		// Bump upgrade stars (increase efficiency)
 		var maxValIndex = data.findIndex(e => e.efficiency === maxVal);
 		var maxStat = data[maxValIndex];
 		maxStat.upgrades = (maxStat.upgrades ?? 0) + 1;
